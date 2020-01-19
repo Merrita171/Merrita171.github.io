@@ -1,0 +1,216 @@
+﻿@*@model ImageGallery.Models.PagedList
+
+    <script>
+        $(document).ready(function () {
+            @*var id = url('?id');
+           @Model.Images.Find(c => c.TypeId == id);*@
+
+
+            })
+    </script>
+@{ 
+  
+   // var images = Model.Images.Where(x => x.TypeId == id);
+    }
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5/jquery.min.js"></script>
+<style type="text/css">
+    .webGrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 500px;
+        background-color:black;
+        border-color:darkred;
+    }
+
+    .header {
+        background-color: #C1D4E6;
+        font-weight: bold;
+        color: #FFF;
+    }
+
+    .webGrid th, .webGrid td {
+        border: 1px solid;
+        padding: 5px;
+    }
+
+    .alt {
+        
+        color: #000;
+    }
+
+    .gridHead a:hover {
+        text-decoration: underline;
+    }
+
+    .description {
+        width: auto;
+    }
+
+    .select {
+        background-color: #71857C;
+    }
+</style>
+
+ <style>
+     body {
+            font-family: Arial;
+            font-size: 10pt;
+        }
+ 
+        .Grid {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+        }
+ 
+        .Grid th {
+            background-color: #F7F7F7;
+            font-weight: bold;
+        }
+ 
+        .Grid th, .Grid td {
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+ 
+        .Grid, .Grid table td {
+            border: 0px solid #ccc;
+        }
+ 
+        .Grid img {
+            height: 150px;
+            width: 150px;
+            cursor: pointer;
+        }
+ 
+        #dialog img {
+            height: 550px;
+            width: 575px;
+            cursor: pointer;
+        }
+ </style>   
+@{
+    ViewBag.Title = "Gallery";
+    var grid = new WebGrid(
+                    canPage: true,
+                    rowsPerPage: Model.PageSize,
+                    canSort: true,
+
+
+                    ajaxUpdateContainerId: "grid"
+                    );
+
+     grid.Bind(Model.Images, rowCount: Model.TotalRecords, autoSortAndPage: true);
+     grid.Pager(WebGridPagerModes.All);
+     @grid.GetHtml(htmlAttributes: new { id = "grid" },
+            fillEmptyRows: false,
+            mode: WebGridPagerModes.All,
+            columns: grid.Columns());
+
+}
+<div id="gridContent" style="font-family: Arial; padding: 20px;">
+    @*@grid.GetHtml(tableStyle: "webgrid-table",
+    headerStyle: "webgrid-header",
+    footerStyle: "webgrid-footer",
+    alternatingRowStyle: "webgrid-alternating-row",
+    selectedRowStyle: "webgrid-selected-row",
+    rowStyle: "webgrid-row-style",
+    //htmlAttributes: new { id = "grid" },
+    //        fillEmptyRows: false,
+    //        mode: WebGridPagerModes.All,
+    columns: grid.Columns());
+    
+    )*@
+    @*<h2>Your Selected Row</h2>*@
+    @if (grid.HasSelection)
+    {
+        var emp = (ImageGallery.Models.PagedList)grid.Rows[grid.SelectedIndex].Value;
+        <p><b>Employee Name:</b> @emp.User</p>
+        @*<p><b>Employee Designation:</b> @emp.Designation</p>
+            <p><b>Employee Gender:</b> @emp.Gender</p>
+            <p><b>Employee Salary:</b> @emp.Salary</p>
+            <p><b>City:</b> @emp.City</p>
+            <p><b>State:</b> @emp.State</p>
+            <p><b>Zip:</b> @emp.Zip</p>*@
+    }
+    @*<h2>Gallery</h2>*@
+    <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+        <!-- The container for the modal slides -->
+        <div class="slides"></div>
+        <!-- Controls for the borderless lightbox -->
+        <h3 class="title"></h3>
+        <a class="prev">‹</a>
+        <a class="next">›</a>
+        <a class="close">×</a>
+        <a class="play-pause"></a>
+        <ol class="indicator"></ol>
+        <!-- The modal dialog, which will be used to wrap the lightbox content -->
+        <div class="modal fade">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title"></h4>
+                    </div>
+                    <div class="modal-body next" style="max-height: 500px; min-height: 400px;"></div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default pull-left prev">
+                            <i class="glyphicon glyphicon-chevron-left"></i>
+                            Previous
+                        </button>
+                        <button type="button" class="btn btn-primary next">
+                            Next
+                            <i class="glyphicon glyphicon-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div style="margin-top: 17px;">
+        <div id="links" >
+            @if (Model.Images != null)
+            {
+            foreach (var item in Model.Images)
+                {
+                <div id="links" >
+                    <a id="catId" href="@item.ImagePath" title="@item.Description" data-gallery>
+                        <img id="img" src="@item.ThumbPath" alt="@item.Description" class="img-rounded" style="margin-bottom:7px;" value="@item.Description"/>
+                    </a>
+                    @*<label id="Item" value="">@item.Description</label>*@
+                    </div>
+            }
+            }
+                </div>
+    </div>
+    </div>
+    <script>
+        //$(document).ready(function () {
+        //    //$('#img').click(function () {
+        //    //    img = $(this).prev('img');
+        //    //    if (img.length > 0) {
+        //    //        alert(img.attr('src'));
+        //    //    }
+        //    //})
+        //    $("#links").on("click", "img", function () {
+        //        var ClickImageId = $(this).attr('alt');
+        //        alert(ClickImageId)
+        //        window.location = '/player_detail?username=' + name;
+        //    });
+        //    //$('#img').click(function () {
+        //    //    //alert("sss");
+        //    //    var altX = $(this).attr('alt');
+        //    //    var alt = $(this).children("img").attr("alt");
+        //    //    var un = $("#img").val();
+        //    //    var title = $(this).attr('title');
+        //    //    var url = $(this).attr('href');
+        //    //    alert(altX);
+        //    //    alert(title);
+        //    //    alert(url);
+        //    //})
+            
+        //});
+    </script>*@
+
+
+

@@ -1,0 +1,81 @@
+﻿@model IEnumerable<ImageGallery.Models.Users>
+
+@{
+    ViewBag.Title = "Home Page";
+    WebGrid webGrid = new WebGrid(source: Model, canSort: false, canPage: false);
+}
+
+<style type="text/css">
+    .webgrid-table {
+        font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+        font-size: 1.2em;
+        width: 100%;
+        display: table;
+        border-collapse: separate;
+        border: solid 1px #98BF21;
+        background-color: white;
+    }
+
+        .webgrid-table td, th {
+            border: 1px solid #98BF21;
+            padding: 3px 7px 2px;
+        }
+
+    .webgrid-header {
+        background-color: #A7C942;
+        color: #FFFFFF;
+        padding-bottom: 4px;
+        padding-top: 5px;
+        text-align: left;
+    }
+
+    .webgrid-footer {
+    }
+
+    .webgrid-row-style {
+        padding: 3px 7px 2px;
+    }
+
+    .webgrid-alternating-row {
+        background-color: #EAF2D3;
+        padding: 3px 7px 2px;
+    }
+</style>
+
+<div class="row">
+
+ 
+    <div class="col-md-4">
+        <h2>User Albums</h2>
+        <p>
+            @webGrid.GetHtml(
+           tableStyle: "webgrid-table",
+        headerStyle: "webgrid-header",
+        footerStyle: "webgrid-footer",
+        //alternatingRowStyle: "webgrid-alternating-row",
+        selectedRowStyle: "webgrid-selected-row",
+        rowStyle: "webgrid-row-style",
+       htmlAttributes: new { @id = "WebGrid" },
+       columns: webGrid.Columns(
+           @*webGrid.Column("Name", "Name", format: @<text><a href="/Home/category/?catId=+'@item.catId'">@item.name</a></text>),*@
+           webGrid.Column( format:@<text><img alt="@Url.Content(item.Photo)" src="@Url.Content(item.Photo)" style="width:200px; height:auto; padding:30px;" /></text>),
+           webGrid.Column( format: @<text> @Html.ActionLink(linkText: (string)@item.Name, actionName: "UserDetails", routeValues: new { filter = item.name })</text>),
+           webGrid.Column(format: @<text><label> Post Comments</label> <a class="btn btn-success" data-modal="" href="@Url.Action("CreatePosts", "Home", new { filter =item.name })" id="btnCreate"><span class="glyphicon glyphicon-plus"></span></a></text>),
+           webGrid.Column(format: @<text> <label>View Comments</label> <a class="btn btn-success" data-modal="" href="@Url.Action("ViewComments", "Home", new { filter =item.name })" id="btnCreate"><span class="glyphicon"></span> Go</a></text>)
+           
+            )
+            )
+        </p>
+    </div>
+
+</div>
+
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/start/jquery-ui.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+
+@*<div class="pull-right col-lg-1">
+        <a class="btn btn-success" data-modal="" href="/home/create" id="btnCreate">
+            <span class="glyphicon glyphicon-plus"></span>
+        </a>
+    </div>*@

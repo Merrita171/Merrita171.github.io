@@ -1,0 +1,260 @@
+﻿@model ImageGallery.Models.PagedList<ImageGallery.Models.Photos> 
+
+
+                <script src="~/Scripts/jquery-3.4.1.js"></script>
+                <script src="~/Scripts/jquery-ui.js"></script>
+                @{
+                    ViewBag.Title = "Image Gallery";
+                    Layout = "~/Views/Shared/_Layout.cshtml";
+                }
+                <script>
+                    $(document).ready(function () {
+                        $("#searchTitle").hide();
+                        $("#searchName").hide();
+                        $("#AlbumResult").hide();
+                        $("#UserResult").hide();
+
+                        $("input[name='chkPassPort']").click(function () {
+
+                            if ($("#chkYes").is(":checked")) {
+                                $("#searchTitle").show();
+                                $("#searchName").hide();
+                            } else {
+                                $("#searchTitle").hide();
+                                $("#searchName").show();
+                            }
+                        });
+
+                        $("#titleSearch").click(function () {
+
+
+                            $("#AlbumResult").show();
+                            $("#UserResult").hide();
+
+                        });
+
+                        $("#nameSearch").click(function () {
+
+                            $("#UserResult").show();
+                            $("#AlbumResult").hide();
+                        });
+                    });
+
+                </script>
+
+                <h2> Advanced Search</h2>
+
+                @using (Html.BeginForm("Search", null, FormMethod.Get))
+                {
+                    <h3></h3>
+                    <div id="search">
+                        <span>Please select an option to search ?</span>
+
+                        <label for="chkYes">
+                            <input type="radio" id="chkYes" name="chkPassPort" />
+                            User Name
+                        </label>
+                        <label for="chkNo">
+                            <input type="radio" id="chkNo" name="chkPassPort" />
+                            Album Title
+                        </label>
+                    </div>
+                    <h3></h3>
+                    <div id="searchTitle" class="row">
+
+                        <div class="col-sm-8">
+
+                            <div class="form-group">
+                                <div class="=col col-sm-2">
+                                    <label>Title</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text"
+                                           name="filter"
+                                           value="@ViewBag.filter"
+                                           class="form-control"
+                                           style="display: inline"
+                                           placeholder="Search" />
+
+                                </div>
+
+                            </div>
+                            <div class="input-group">
+                                <div class="=col col-sm-2">
+                                    <span class="input-group-btn">
+                                        <button id="titleSearch" class="btn btn-primary" type="submit">Search</button>
+                                    </span>
+                                </div>
+                                @*<div class="pull-right col-lg-1">
+                                        <a class="btn btn-success" data-modal="" href="/home/create" id="btnCreate">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </div>*@
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div id="searchName" class="row">
+
+                        <div class="col-sm-8">
+
+                            <div class="form-group">
+                                <div class="=col col-sm-2">
+                                    <label>User Name</label>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="text"
+                                           name="filter"
+                                           value="@ViewBag.filter"
+                                           class="form-control"
+                                           style="display: inline"
+                                           placeholder="Search" />
+
+                                </div>
+
+                            </div>
+                            <div class="input-group">
+                                <div class="=col col-sm-2">
+                                    <span class="input-group-btn">
+                                        <button id="nameSearch" class="btn btn-primary" type="submit">Search</button>
+                                    </span>
+                                </div>
+                                @*<div class="pull-right col-lg-1">
+                                        <a class="btn btn-success" data-modal="" href="/home/create" id="btnCreate">
+                                            <span class="glyphicon glyphicon-plus"></span>
+                                        </a>
+                                    </div>*@
+                            </div>
+
+
+                        </div>
+                    </div>
+        <!-- The Bootstrap Image Gallery lightbox, should be a child element of the document body -->
+                    <div id="blueimp-gallery" class="blueimp-gallery blueimp-gallery-controls">
+                        <!-- The container for the modal slides -->
+                        <div class="slides"></div>
+                        <!-- Controls for the borderless lightbox -->
+                        <h3 class="title"></h3>
+                        <a class="prev">‹</a>
+                        <a class="next">›</a>
+                        <a class="close">×</a>
+                        <a class="play-pause"></a>
+                        <ol class="indicator"></ol>
+                        <!-- The modal dialog, which will be used to wrap the lightbox content -->
+                        <div class="modal fade">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title"></h4>
+                                    </div>
+                                    <div class="modal-body next" style="max-height: 500px; min-height: 400px;"></div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-default pull-left prev">
+                                            <i class="glyphicon glyphicon-chevron-left"></i>
+                                            Previous
+                                        </button>
+                                        <button type="button" class="btn btn-primary next">
+                                            Next
+                                            <i class="glyphicon glyphicon-chevron-right"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="AlbumResult" >
+
+                        <h4> Search Results </h4>
+                        <div style="margin-top: 17px;">
+                            <div id="links">
+
+                                @foreach (var item in Model.Content)
+                                {
+
+                                    <a href="@item.ImagePath" title="@item.Description" data-gallery>
+                                        <img src="@item.ThumbPath" alt="@item.ThumbPath" class="img-rounded" style="margin-bottom:7px;" />
+                                    </a>
+                                }
+                            </div>
+                        </div>
+
+                    </div>
+                    <div id="UserResult" >
+
+                        <div class="well">
+
+
+                            <div class="form-horizontal">
+                                <div class="form-group">
+
+                                    <div class="col-sm-5">
+                                        @*<img src="@Url.Content("Session["Name"])")" alt="Image" />*@
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Name :", new { @class = "control-label col-sm-3" })
+                                    <div class="col-sm-5">
+                                        <input type="hidden" value="@Session["Address"]" id ="myHiddenVar" />
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Address :", new { @class = "control-label col-sm-3" })
+                                    <div class="col-sm-5">
+                                        <input type="hidden" value="@Session["username"]" id="myHiddenVar" />  
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Phone :", new { @class = "control-label col-sm-3" })
+                                    <div class="col-sm-5">
+                                        <input type="hidden" value="@Session["Phone"]" id="myHiddenVar" />  
+
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    @Html.Label("Email :", new { @class = "control-label col-sm-3" })
+                                    <div class="col-sm-5">
+                                        <input type="hidden" value="@Session["username"]" id="myHiddenVar" />  
+                                    </div>
+
+                                </div>
+
+                                @*<div class="form-group">
+                                        <div class="col-sm-5 col-sm-offset-3">
+                                            <input type="submit" value="Save" class="btn btn-primary" />
+                                            <div style="color:red">
+                                                @ViewBag.error
+                                            </div>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                        @{
+                            var grid = new WebGrid(
+                                        canPage: true,
+                                        rowsPerPage: Model.PageSize,
+                                        canSort: true,
+                                        ajaxUpdateContainerId: "grid");
+
+                            grid.Bind(Model.Content, rowCount: Model.TotalRecords, autoSortAndPage: false);
+                            grid.Pager(WebGridPagerModes.All);
+
+                            @grid.GetHtml(htmlAttributes: new { id = "grid" },
+            fillEmptyRows: false,
+            mode: WebGridPagerModes.All,
+            columns: grid.Columns());
+                        }
+                    </div>
+                            }

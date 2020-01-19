@@ -1,0 +1,87 @@
+﻿@model IEnumerable<ImageGallery.Models.Categories>
+@{
+    ViewBag.Title = "Categories";
+    WebGrid webGrid = new WebGrid(source: Model, canSort: false, canPage: false);
+}
+
+<style type="text/css">
+    .webGrid {
+        margin: 4px;
+        border-collapse: collapse;
+        width: 500px;
+        background-color: black;
+        border-color: darkred;
+    }
+
+    .header {
+        
+        font-weight: bold;
+        color: #FFF;
+    }
+
+    .webGrid th, .webGrid td {
+        border: 1px solid;
+        padding: 5px;
+    }
+
+    .alt {
+        color: #000;
+    }
+
+    .gridHead a:hover {
+        text-decoration: underline;
+    }
+
+    .description {
+        width: auto;
+    }
+
+    .select {
+        background-color: #71857C;
+    }
+</style>
+
+
+
+<div class="row">
+
+
+    <div class="col-md-4">
+        <h2>List Image</h2>
+        <p>
+            @webGrid.GetHtml(tableStyle: "webGrid",
+                headerStyle: "header",
+                alternatingRowStyle: "alt",
+                selectedRowStyle: "select",
+       htmlAttributes: new { @id = "WebGrid" },
+       columns: webGrid.Columns(
+           webGrid.Column("", "", format: @<text><a href="/Home/album/?filter=+'@item.TypeId'">@item.Description</a></text>),
+           webGrid.Column("", "", format:@<text><img alt="@Url.Content(item.ThumbPath)" src="@Url.Content(item.ThumbPath)" style="width:200px; height:auto; padding:30px;" /></text>),
+           webGrid.Column("", "", format: @<text> @Html.ActionLink(linkText: "User Albums", actionName: "album", routeValues: new { filter = item.TypeId })</text>),
+           webGrid.Column("", "", format: @<text> @Html.ActionLink(linkText: "User Posts", actionName: "category", routeValues: new { catId = item.TypeId })</text>)
+          )
+            )
+
+        </p>
+       
+    </div>
+
+</div>
+<script>
+
+        jQuery(document).ready(function () {
+            jQuery("#gridContent a").hover(function (index) {
+                var Discription  = $(this).text();
+                @ViewBag.total = Discription;
+            });
+
+
+        });
+
+</script>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/themes/start/jquery-ui.css" />
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.24/jquery-ui.min.js"></script>
+
+
+

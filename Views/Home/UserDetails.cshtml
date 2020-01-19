@@ -1,0 +1,63 @@
+﻿@model ImageGallery.Models.Users
+@{
+    ViewBag.Title = "Upload Images";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<h2>About Me</h2>
+<div class="well">
+   
+     
+        <div class="form-horizontal">
+            <div class="form-group">
+               
+                <div class="col-sm-5">
+                    <img src="@Url.Content(Model.Photo)" alt="Image" />
+
+                </div>
+                </div>
+                <div class="form-group">
+                    @Html.Label("Name :", new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-5">
+                       @Html.TextBoxFor(model => model.Name, new { @class = "form-control required" , @readonly = "readonly" })
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("Address :", new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-5">
+                        @Html.TextBoxFor(model => model.Address, new { @class = "form-control required", @readonly = "readonly" })
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("Phone :", new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-5">
+                        @Html.TextBoxFor(model => model.Phone, new { @class = "form-control required", @readonly = "readonly" })
+
+                    </div>
+
+                </div>
+                <div class="form-group">
+                    @Html.Label("Email :", new { @class = "control-label col-sm-3" })
+                    <div class="col-sm-5">
+                        @Html.TextBoxFor(model => model.Email, new { @class = "form-control required", @readonly = "readonly" })
+
+                    </div>
+
+                </div>
+
+                @*<div class="form-group">
+                <div class="col-sm-5 col-sm-offset-3">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <div style="color:red">
+                        @ViewBag.error
+                    </div>
+                </div>
+            </div>*@
+            </div>
+    </div>
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+}

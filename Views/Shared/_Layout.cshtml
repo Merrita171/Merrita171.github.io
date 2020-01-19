@@ -1,0 +1,110 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    @*<link href="~/Content/jquery-ui.css" rel="stylesheet" />*@
+    <link href="~/Content/bootstrap-image-gallery.min.css" rel="stylesheet" />
+    @* CSS files for bootstrap-image-gallery*@
+    @*<link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">*@
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    @*<link rel="stylesheet" href="//blueimp.github.io/Gallery/css/blueimp-gallery.min.css">*@
+    <link href="~/Content/blueimp-gallery.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/Content/bootstrap-image-gallery.min.css">
+
+</head>
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("Album", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Portfolio", "UserProfile", "Home")</li>
+                    @*<li>
+    @Html.ActionLink("Upload", "Create", "Home")
+    <ul class="nav navbar-nav">
+        <li>@Html.ActionLink("Upload Album", "Create", "Home")</li>
+        <li>@Html.ActionLink("Upload User", "CreateUser", "Home")</li>
+    </ul>
+        </li>*@
+    
+    @*<li>@Html.ActionLink("Index", "Index", "Home")</li>*@
+                    
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Upload </a>
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li>@Html.ActionLink("Upload Album", "Create", "Home")</li>
+                            <li>@Html.ActionLink("Upload User", "CreateUser", "Home")</li>
+                            <li class="dropdown-submenu">
+                                @*<a tabindex="-1" href="#">Upload User</a>*@
+                                <ul class="dropdown-menu">
+                                    @*<li>@Html.ActionLink("Upload Album", "Create", "Home")</li>*@
+                                    
+                                   
+                                    <li class="dropdown-submenu">
+                                        <a href="#">Users</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">User Settings</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">Search </a>
+                        <ul class="dropdown-menu multi-level" role="menu" aria-labelledby="dropdownMenu">
+                            <li>@Html.ActionLink("Search Album", "SearchAlbum", "Home")</li>
+                            <li>@Html.ActionLink("Search User", "SearchUser", "Home")</li>
+                            <li class="dropdown-submenu">
+                                @*<a tabindex="-1" href="#">Upload User</a>*@
+                                <ul class="dropdown-menu">
+                                    @*<li>@Html.ActionLink("Upload Album", "Create", "Home")</li>*@
+
+
+                                    <li class="dropdown-submenu">
+                                        <a href="#">Users</a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">User Settings</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </li>
+                    @*<li>@Html.ActionLink("Search", "Search", "Home")      </li>*@
+
+</ul>
+                @Html.Partial("_LoginPartial")
+            </div>
+        </div>
+    </div>
+    <div class="container body-content">
+        @RenderBody()
+        <hr />
+        <footer>
+            <p>&copy; @DateTime.Now.Year - My Album</p>
+        </footer>
+    </div>
+
+        @Scripts.Render("~/bundles/jquery")
+        <script src="~/Scripts/jquery.blueimp-gallery.min.js"></script>
+    @*<script src="//blueimp.github.io/Gallery/js/jquery.blueimp-gallery.min.js"></script>*@
+    <script src="~/Scripts/bootstrap-image-gallery.min.js"></script>
+    @*<script src="~/Scripts/bootstrap.min.js"></script>*@
+    @*<script src="~/Scripts/jquery-ui-1.10.0.min.js"></script>*@
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+</body>
+</html>
